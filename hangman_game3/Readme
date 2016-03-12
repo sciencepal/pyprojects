@@ -1,5 +1,5 @@
 This is a simple hangman game that features two modes - human mode and computer mode
-Play human mode and then computer mode on the same string to compare you score with that of the computer's.
+Play human mode and then computer mode on the same string to compare your score with that of the computer's.
 (Psst : The computer is not invincible! Check humanbeatcomputer.py)
 
 Instructions:
