@@ -7,8 +7,6 @@
 
 import random
 import string
-import time
-import pyttsx
 
 VOWELS = 'aeiou'
 CONSONANTS = 'bcdfghjklmnpqrstvwxyz'
@@ -31,15 +29,14 @@ def loadWords():
     Depending on the size of the word list, this function may
     take a while to finish.
     """
-    print "Loading word list from file ...."
+    print ("Loading word list from file...")
     # inFile: file
-    time.sleep(1) 
-    inFile = open(WORDLIST_FILENAME, 'r', 0)
+    inFile = open(WORDLIST_FILENAME, 'r', -1)
     # wordList: list of strings
     wordList = []
     for line in inFile:
         wordList.append(line.strip().lower())
-    print "  ", len(wordList), "words loaded."
+    print (("  ", len(wordList), "words loaded."))
     return wordList
 
 def getFrequencyDict(sequence):
@@ -90,10 +87,10 @@ def displayHand(hand):
 
     hand: dictionary (string -> int)
     """
-    for letter in hand.keys():
+    for letter in list(hand.keys()):
         for j in range(hand[letter]):
-             print letter,              # print all on the same line
-    print                               # print an empty line
+             print ((letter), end=' ')           # print all on the same line
+    print  ()                             # print an empty line
 
 #
 # Problem #2: Make sure you understand how this function works and what it does!
@@ -111,7 +108,7 @@ def dealHand(n):
     returns: dictionary (string -> int)
     """
     hand={}
-    numVowels = n / 3
+    numVowels = int(n / 3)
     
     for i in range(numVowels):
         x = VOWELS[random.randrange(0,len(VOWELS))]
@@ -128,7 +125,7 @@ def dealHand(n):
 #
 def updateHand(hand, word):
     for i in word:
-        if hand.has_key(i)==True:
+        if (i in hand)==True:
             hand[i]-=1
     return hand
 
@@ -140,7 +137,7 @@ def updateHand(hand, word):
 def isValidWord(word, hand, wordList):
     k=0
     if word in wordList:
-        for j in hand.keys():
+        for j in list(hand.keys()):
             for i in word:
                 if hand.get(i,0)!=0 and i==j:
                     k+=1
@@ -170,60 +167,27 @@ def playHand(hand, wordList, n):
     score=0
     s=0
     while calculateHandlen(hand)>0:
-        print 'Current Hand: ',
+        print (('Current Hand: '),end=' ')
         displayHand(hand)
-        print 'Enter word, or a "." to indicate that you are finished: '
-        say1=('Enter word, or a dot to indicate that you are finished: ')
-        #print (say1)
-        engine=pyttsx.init()
-        engine.say(say1)
-        engine.runAndWait()
-        engine.stop()
-        del engine
-        word=raw_input()
+        word=input('Enter word, or a "." to indicate that you are finished: ')
         if word=='.':
             break
         else:
             if isValidWord(word, hand, wordList)==False:
-                say1=('Invalid word, please try again.')
-                print (say1)
-                engine=pyttsx.init()
-                engine.say(say1)
-                engine.runAndWait()
-                engine.stop()
-                del engine
+                print ('Invalid word, please try again.')
+                print ()
             else:
                 s=getWordScore(word, n)
                 score+=s
                 hand=updateHand(hand, word)
-                say1=(word+' earned '+(str)(s)+' points. Total: '+str(score)+' points')
-                print (say1)
-                engine=pyttsx.init()
-                engine.say(say1)
-                engine.runAndWait()
-                engine.stop()
-                del engine
+                print (word+' earned '+(str)(s)+' points. Total: '+str(score)+' points')
+                print ()
                 if calculateHandlen(hand)==0:
                     break
     if word=='.':
-        say1=('Goodbye! Total score: '+str(score)+' points.')
-        print (say1)
-        engine=pyttsx.init()
-        engine.say(say1)
-        engine.runAndWait()
-        engine.stop()
-        del engine
-        time.sleep(0.5)
-        say1=('Press r to replay the hand and then c to compare your score with the computer')
-        print (say1)
-        engine=pyttsx.init()
-        engine.say(say1)
-        engine.runAndWait()
-        engine.stop()
-        del engine
-        time.sleep(0.5)
+        print ('Goodbye! Total score: '+str(score)+' points.')
     else:
-        print 'Run out of letters. Total score: '+str(score)+' points.'
+        print ('Run out of letters. Total score: '+str(score)+' points.')
 
 
 
@@ -235,9 +199,9 @@ def playGame(wordList):
     trial=0
     k='n'
     while k!='e':
-        k=raw_input('Enter n to deal a new hand, r to replay the last hand, or e to end game: ')
+        k=input('Enter n to deal a new hand, r to replay the last hand, or e to end game: ')
         if k=='r' and trial==0:
-            print 'You have not played a hand yet. Please play a new hand first!'
+            print ('You have not played a hand yet. Please play a new hand first!')
         elif k=='e':
             break
         elif k=='n':
@@ -250,8 +214,8 @@ def playGame(wordList):
             hand=h.copy()
             playHand(hand, wordList, HAND_SIZE)
         else:
-            print 'Invalid command.'
-        print
+            print ('Invalid command.')
+        print ()
 
 
 
