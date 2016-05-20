@@ -4,12 +4,14 @@ import pyttsx
 
 a='y'
 while (a!='n' and a!='N'):
-    x=""
     print "Enter string to speak"
+    e=pyttsx.init()
     x=raw_input()
-    engine=pyttsx.init()
-    engine.say(x)
-    engine.runAndWait()
-    engine=pyttsx.init()
+    #print "you entered : ",x
+    e.say(x)
+    e.runAndWait()
+    e.stop()
+    del e
+    #engine=pyttsx.init()
     print 'Enter y to speak again n to stop'
     a=raw_input()

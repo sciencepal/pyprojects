@@ -76,7 +76,6 @@ def playGame(wordList):
         print ('**********************************************************************************')
         print ()
         k=input('Enter n to deal a new hand, r to replay the last hand, l for rules, or e to end game: ')
-        print ()
         if k=='r' and trial==0:
             print ('You have not played a hand yet. Please play a new hand first!')
         elif k=='e':
@@ -101,7 +100,6 @@ def playGame(wordList):
                     print ('Invalid command.')
         elif k=='r':
             while uc!='u' and uc!='c':
-                print ()
                 uc=input('Enter u to have yourself play, c to have the computer play: ')
                 if uc=='u':
                     trial+=1
